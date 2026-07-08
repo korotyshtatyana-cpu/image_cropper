@@ -5,3 +5,16 @@ example/linux/flutter/ephemeral/
 example/macos/Flutter/ephemeral/
 example/windows/flutter/ephemeral/
 example/.dart_tool/
+example/images/
+
+build/
+.dart_tool/
+.idea/
+*.iml
+
+screenshots/
+images/
+*.jpg
+*.png
+*.jpeg
+*.gif

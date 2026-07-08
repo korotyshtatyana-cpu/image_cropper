@@ -1,5 +1,9 @@
 # image_cropper
 
+[![pub version](https://img.shields.io/pub/v/telegram_image_cropper)](https://pub.dev/packages/telegram_image_cropper)
+[![license](https://img.shields.io/github/license/korotyshtatyana-cpu/image_cropper)](https://github.com/korotyshtatyana-cpu/image_cropper/blob/main/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web%20%7C%20macOS%20%7C%20Windows%20%7C%20Linux-blue?logo=flutter)](https://flutter.dev)
+
 A flexible, high-performance image cropping widget for Flutter, built with `InteractiveViewer`. Inspired by the intuitive cropping experience in apps like **Telegram**, it allows users to smoothly zoom and pan an image behind a fixed circular mask.
 
 <table>

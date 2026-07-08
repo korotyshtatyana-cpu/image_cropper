@@ -15,6 +15,28 @@ dependencies:
   web: ^1.1.1
   vector_math: ^2.1.4
 
+topics:
+  - image-cropper
+  - image-editor
+  - flutter-widget
+  - photo-editing
+
+screenshots:
+  - description: "Cropping on desktop"
+    path: example/images/screenshots/desctop.png
+  - description: "Cropping on mobile"
+    path: example/images/screenshots/mobile.png
+  - description: "Cropping on web"
+    path: example/images/screenshots/web.png
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
