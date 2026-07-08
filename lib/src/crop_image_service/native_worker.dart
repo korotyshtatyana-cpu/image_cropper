@@ -34,17 +34,18 @@ Uint8List _cropImageInIsolate(Map<String, dynamic> params) {
   final int cropHeight = params['cropHeight'] as int;
 
   final img.Image original = img.Image.fromBytes(
-    imageWidth,
-    imageHeight,
-    imageBytes,
+    width: imageWidth,
+    height: imageHeight,
+    bytes: imageBytes.buffer,
+    numChannels: 4,
   );
 
   final img.Image cropped = img.copyCrop(
     original,
-    cropLeft,
-    cropTop,
-    cropWidth,
-    cropHeight,
+    x: cropLeft,
+    y: cropTop,
+    width: cropWidth,
+    height: cropHeight,
   );
 
   return Uint8List.fromList(img.encodeJpg(cropped, quality: 90));

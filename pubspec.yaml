@@ -1,6 +1,6 @@
 name: telegram_image_cropper
 description: "A flexible image cropping widget with InteractiveViewer, supporting web, desktop, and mobile."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/korotyshtatyana-cpu/image_cropper
 repository: https://github.com/korotyshtatyana-cpu/image_cropper
 
@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image: ^3.0.1
+  image: ^4.9.1
   web: ^1.1.1
   vector_math: ^2.1.4
 
@@ -40,4 +40,4 @@ platforms:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
