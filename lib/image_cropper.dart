@@ -2,11 +2,46 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'circle_cutout_painter.dart';
-import 'crop_image_service/crop_image_service.dart';
+import 'src/circle_cutout_painter.dart';
+import 'src/crop_image_service/crop_image_service.dart';
 
+/// A widget that provides an interactive image cropping experience.
+///
+/// It allows users to zoom and pan an image behind a fixed circular mask,
+/// similar to the photo cropping experience in apps like Telegram.
 class ImageCropper extends StatefulWidget {
-  const ImageCropper({super.key});
+  /// The path to the image asset that needs to be cropped.
+  final String imagePath;
+
+  /// The diameter of the circular crop area in logical pixels.
+  ///
+  /// Defaults to 200. If the image is smaller than this size, the crop size
+  /// will be adjusted to fit the image dimensions.
+  final int cropSize;
+
+  /// The style to be applied to the 'Crop Image' button.
+  final ButtonStyle? cropButtonStyle;
+
+  /// The text widget to be displayed inside the 'Crop Image' button.
+  ///
+  /// Defaults to `Text('Crop Image')` if null.
+  final Text? cropButtonText;
+
+  /// An optional widget to display as the result of the cropping process.
+  ///
+  /// If provided, this widget will be shown in a dialog after the user
+  /// presses the crop button. If null, a default `AlertDialog` with the
+  /// cropped image will be shown.
+  final Widget? croppedImageResultWidget;
+
+  const ImageCropper({
+    required this.imagePath,
+    this.cropSize = 200,
+    this.cropButtonStyle,
+    this.cropButtonText,
+    this.croppedImageResultWidget,
+    super.key,
+  });
 
   @override
   _ImageCropperState createState() => _ImageCropperState();
@@ -19,7 +54,7 @@ class _ImageCropperState extends State<ImageCropper> {
   final TransformationController _controller = TransformationController();
   EdgeInsets _boundaryMargin = EdgeInsets.zero;
 
-  // Fixed crop area dimensions
+  // Default crop area dimensions
   int _cropSize = 200;
 
   @override
@@ -49,18 +84,18 @@ class _ImageCropperState extends State<ImageCropper> {
 
   Future<void> _loadImage() async {
     // Load an image from assets
-    final ByteData data = await rootBundle.load('images/arindam-chowdhury.jpg');
+    final ByteData data = await rootBundle.load(widget.imagePath);
     final Uint8List list = Uint8List.view(data.buffer);
     final ui.Image image = await _loadImageFromBytes(list);
 
     setState(() {
       _image = image;
       _imageLoaded = true;
-      _cropSize = _image.width < _cropSize
+      _cropSize = _image.width < widget.cropSize
           ? _image.width
-          : _image.height < _cropSize
+          : _image.height < widget.cropSize
               ? _image.height
-              : _cropSize;
+              : widget.cropSize;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -123,8 +158,11 @@ class _ImageCropperState extends State<ImageCropper> {
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: ElevatedButton(
-                            onPressed: _imageLoaded ? () => _cropImage(context) : null,
-                            child: const Text('Crop Image'),
+                            style: widget.cropButtonStyle,
+                            onPressed:
+                                _imageLoaded ? () => _cropImage(context) : null,
+                            child: widget.cropButtonText ??
+                                const Text('Crop Image'),
                           ),
                         ),
                       ),
@@ -148,10 +186,12 @@ class _ImageCropperState extends State<ImageCropper> {
     ).then((Image? image) {
       showDialog(
         context: context,
-        builder: (_) => AlertDialog(
-          content: image,
-          contentPadding: EdgeInsets.zero,
-        ),
+        builder: (_) =>
+            widget.croppedImageResultWidget ??
+            AlertDialog(
+              content: image,
+              contentPadding: EdgeInsets.zero,
+            ),
       );
     });
   }

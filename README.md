@@ -1,54 +1,86 @@
-# Image Cropper with InteractiveViewer
+# image_cropper
 
-A Flutter application demonstrating a custom image cropping tool implemented with the `InteractiveViewer` widget. This project provides a smooth, intuitive photo cropping experience inspired by **Telegram**, where the user moves and scales the image behind a fixed circular mask.
+A flexible, high-performance image cropping widget for Flutter, built with `InteractiveViewer`. Inspired by the intuitive cropping experience in apps like **Telegram**, it allows users to smoothly zoom and pan an image behind a fixed circular mask.
 
 <table>
   <tr>
-    <td><img src="images/screenshots/desctop.png" width="300"/></td>
-    <td><img src="images/screenshots/mobile.png" width="300"/></td>
-    <td><img src="images/screenshots/web.png" width="300"/></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/desctop.png" width="250"/><br/><sub>Desktop</sub></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/mobile.png" width="250"/><br/><sub>Mobile</sub></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/web.png" width="250"/><br/><sub>Web</sub></td>
   </tr>
 </table>
 
 ## Features
 
-- **Interactive Zoom & Pan**: Leverage `InteractiveViewer` for natural gestures to adjust the image position and scale.
-- **Circular Crop Overlay**: A custom-painted overlay providing a clear visual guide for the cropping area.
-- **True Cross-Platform Support**: Works seamlessly across **Web**, **Desktop** (macOS, Windows, Linux), and **Mobile** (iOS, Android).
-- **Optimized Performance**: 
-  - **Native**: Uses background Isolates via the `compute` function to keep the UI responsive.
-  - **Web**: Uses optimized Canvas API and `ImageData` for high-performance image manipulation.
-- **Precise Matrix Mapping**: Uses transformation matrices to accurately map the screen crop area back to the original image coordinates, regardless of the zoom level.
-
-## How It Works
-
-The project tracks image transformations using the `TransformationController`.
-
-1. **Matrix Inversion**: When cropping, the inverse of the transformation matrix is applied to the crop area's screen coordinates.
-2. **Coordinate Scaling**: These coordinates are scaled to match the original image's high-resolution dimensions.
-3. **Conditional Workers**: 
-   - On **Native** platforms, the raw bytes are processed in an Isolate using the `image` package.
-   - On **Web**, the image is rendered to an offscreen Canvas using `ImageData` and `drawImage`, then exported as a Blob.
-4. **Result**: The final cropped image is returned as a standard Flutter `Image` widget.
-
-## Project Structure
-
-- `lib/main.dart`: Entry point of the application.
-- `lib/image_cropper.dart`: Main UI widget with `InteractiveViewer` and the crop overlay.
-- `lib/crop_image_service.dart`: Facade service that coordinates matrix calculations and platform-specific workers.
-- `lib/web_worker.dart`: Web-specific implementation using `package:web`.
-- `lib/native_worker.dart`: Native implementation using Dart Isolates.
-- `lib/circle_cutout_painter.dart`: Custom painter for the circular mask overlay.
+- **Telegram-style Interaction**: Move and scale the image naturally within a fixed crop area.
+- **Cross-Platform**: Fully compatible with **Web**, **iOS**, **Android**, and **Desktop** (macOS, Windows, Linux).
+- **High Performance**:
+  - **Native**: Uses background Isolates for image processing to prevent UI stuttering.
+  - **Web**: Utilizes optimized `Canvas` and `ImageData` for fast client-side cropping.
+- **Customizable**: Control crop size, button styles, labels, and the result display.
+- **Precise**: Uses transformation matrices for pixel-perfect cropping regardless of zoom level.
 
 ## Getting Started
 
-1. **Clone the repository.**
-2. **Ensure you have Flutter installed.**
-3. **Run `flutter pub get`** to install dependencies.
-4. **Run the app** on your target platform (Web, Desktop, or Mobile).
+Add `image_cropper` to your `pubspec.yaml`:
 
-## Dependencies
+```yaml
+dependencies:
+  image_cropper: ^1.0.0
+```
 
-- [image](https://pub.dev/packages/image): For native-side image processing.
-- [web](https://pub.dev/packages/web): For modern Web API interactions.
-- [vector_math](https://pub.dev/packages/vector_math): For matrix transformations.
+## Usage
+
+Import the package:
+
+```dart
+import 'package:image_cropper/image_cropper.dart';
+```
+
+### Basic Example
+
+```dart
+ImageCropper(
+  imagePath: 'assets/images/profile.jpg',
+  cropSize: 250,
+  cropButtonText: Text('Save Profile Picture'),
+)
+```
+
+### Custom Styling & Result Widget
+
+```dart
+ImageCropper(
+  imagePath: 'assets/images/photo.jpg',
+  cropSize: 200,
+  cropButtonStyle: ElevatedButton.styleFrom(
+    backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+  ),
+  cropButtonText: Text('Apply Crop'),
+  croppedImageResultWidget: CustomResultDialog(), // Show your custom widget after cropping
+)
+```
+
+## Properties
+
+| Property | Type | Description | Default |
+|----------|------|-------------|---------|
+| `imagePath` | `String` | Path to the asset image. | *Required* |
+| `cropSize` | `int` | Diameter of the circular crop area. | `200` |
+| `cropButtonStyle` | `ButtonStyle?` | Style for the "Crop" button. | `null` |
+| `cropButtonText` | `Text?` | Custom label for the "Crop" button. | `Text('Crop Image')` |
+| `croppedImageResultWidget` | `Widget?` | Custom widget shown in a dialog after cropping. | `null` |
+
+## How It Works
+
+1. **InteractiveViewer**: Handles all gestures (pan, pinch-to-zoom).
+2. **Matrix Transformation**: The widget captures the exact transformation state from the `TransformationController`.
+3. **Inverse Mapping**: It applies the inverse of the transformation matrix to the screen crop area to find the exact region on the source image.
+4. **Platform Workers**:
+   - On **Native** platforms, it processes bytes in a background isolate via the `image` library.
+   - On **Web**, it uses the `package:web` API to render to an offscreen Canvas for efficiency.
+
+## License
+
+This project is licensed under the MIT License.
