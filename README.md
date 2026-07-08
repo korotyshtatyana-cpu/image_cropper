@@ -34,13 +34,13 @@ dependencies:
 Import the package:
 
 ```dart
-import 'package:image_cropper/image_cropper.dart';
+import 'package:image_cropper/telegram_image_cropper.dart';
 ```
 
 ### Basic Example
 
 ```dart
-ImageCropper(
+TelegramImageCropper(
   imagePath: 'assets/images/profile.jpg',
   cropSize: 250,
   cropButtonText: Text('Save Profile Picture'),
@@ -50,7 +50,7 @@ ImageCropper(
 ### Custom Styling & Result Widget
 
 ```dart
-ImageCropper(
+TelegramImageCropper(
   imagePath: 'assets/images/photo.jpg',
   cropSize: 200,
   cropButtonStyle: ElevatedButton.styleFrom(

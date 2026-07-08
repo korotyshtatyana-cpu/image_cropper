@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  image_cropper:
+  telegram_image_cropper:
     path: ../
 
   cupertino_icons: ^1.0.6

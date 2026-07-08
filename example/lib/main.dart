@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+import 'package:telegram_image_cropper/telegram_image_cropper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: const ImageCropper(imagePath: 'images/lorenzomessinaph.jpg'),
+        body: const TelegramImageCropper(imagePath: 'images/lorenzomessinaph.jpg'),
       ),
     );
   }

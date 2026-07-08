@@ -9,7 +9,7 @@ import 'src/crop_image_service/crop_image_service.dart';
 ///
 /// It allows users to zoom and pan an image behind a fixed circular mask,
 /// similar to the photo cropping experience in apps like Telegram.
-class ImageCropper extends StatefulWidget {
+class TelegramImageCropper extends StatefulWidget {
   /// The path to the image asset that needs to be cropped.
   final String imagePath;
 
@@ -34,7 +34,7 @@ class ImageCropper extends StatefulWidget {
   /// cropped image will be shown.
   final Widget? croppedImageResultWidget;
 
-  const ImageCropper({
+  const TelegramImageCropper({
     required this.imagePath,
     this.cropSize = 200,
     this.cropButtonStyle,
@@ -44,10 +44,10 @@ class ImageCropper extends StatefulWidget {
   });
 
   @override
-  _ImageCropperState createState() => _ImageCropperState();
+  _TelegramImageCropperState createState() => _TelegramImageCropperState();
 }
 
-class _ImageCropperState extends State<ImageCropper> {
+class _TelegramImageCropperState extends State<TelegramImageCropper> {
   late ui.Image _image;
   bool _imageLoaded = false;
   final GlobalKey _key = GlobalKey();
