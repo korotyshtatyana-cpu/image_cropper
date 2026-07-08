@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
@@ -53,21 +54,24 @@ class CropImageService {
         transformedRect.height.clamp(0, imageHeight - cropTop).toInt();
 
     if (imageByteData != null) {
-      final img.Image original = img.Image.fromBytes(
-          imageWidth, imageHeight, imageByteData.buffer.asUint8List());
-      final img.Image croppedImage = img.copyCrop(
-        original,
-        cropLeft,
-        cropTop,
-        cropWidth,
-        cropHeight,
+      final Uint8List imageBytes = imageByteData.buffer.asUint8List();
+
+      final Uint8List croppedImage = await compute(
+        _cropImageInIsolate,
+        <String, dynamic>{
+          'imageBytes': imageBytes,
+          'imageWidth': imageWidth,
+          'imageHeight': imageHeight,
+          'cropLeft': cropLeft,
+          'cropTop': cropTop,
+          'cropWidth': cropWidth,
+          'cropHeight': cropHeight,
+        },
       );
 
-      // Convert cropped image to displayable format
-      final Uint8List cropped = await _convertToUiImage(croppedImage);
-
       // Return the cropped image
-      return Image.memory(Uint8List.view(cropped.buffer.asByteData().buffer));
+      return Image.memory(
+          Uint8List.view(croppedImage.buffer.asByteData().buffer));
     }
 
     return null;
@@ -82,8 +86,29 @@ class CropImageService {
     return imageWidth / size.width;
   }
 
-  static Future<Uint8List> _convertToUiImage(img.Image image) async {
-    final Uint8List bytes = Uint8List.fromList(img.encodePng(image));
-    return bytes;
+  static Uint8List _cropImageInIsolate(Map<String, dynamic> params) {
+    final Uint8List imageBytes = params['imageBytes'] as Uint8List;
+    final int imageWidth = params['imageWidth'] as int;
+    final int imageHeight = params['imageHeight'] as int;
+    final int cropLeft = params['cropLeft'] as int;
+    final int cropTop = params['cropTop'] as int;
+    final int cropWidth = params['cropWidth'] as int;
+    final int cropHeight = params['cropHeight'] as int;
+
+    final img.Image original = img.Image.fromBytes(
+      imageWidth,
+      imageHeight,
+      imageBytes,
+    );
+
+    final img.Image cropped = img.copyCrop(
+      original,
+      cropLeft,
+      cropTop,
+      cropWidth,
+      cropHeight,
+    );
+
+    return Uint8List.fromList(img.encodeJpg(cropped, quality: 90));
   }
 }
