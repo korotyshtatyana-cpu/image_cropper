@@ -117,16 +117,22 @@ class _ImageCropperState extends State<ImageCropper> {
                           ),
                         ),
                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 36),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(
+                            onPressed: _imageLoaded ? () => _cropImage(context) : null,
+                            child: const Text('Crop Image'),
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 : const CircularProgressIndicator(),
           ),
         ),
-        ElevatedButton(
-          onPressed: _imageLoaded ? () => _cropImage(context) : null,
-          child: const Text('Crop Image'),
-        ),
-        const SizedBox(height: 36),
       ],
     );
   }
