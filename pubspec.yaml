@@ -1,6 +1,6 @@
 name: telegram_image_cropper
 description: "A flexible image cropping widget with InteractiveViewer, supporting web, desktop, and mobile."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/korotyshtatyana-cpu/image_cropper
 repository: https://github.com/korotyshtatyana-cpu/image_cropper
 
