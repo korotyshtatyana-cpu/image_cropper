@@ -2,6 +2,14 @@
 
 A Flutter application demonstrating a custom image cropping tool implemented with the `InteractiveViewer` widget. This project provides a smooth, intuitive photo cropping experience inspired by **Telegram**, where the user moves and scales the image behind a fixed circular mask.
 
+<table>
+  <tr>
+    <td><img src="images/screenshots/desctop.png" width="300"/></td>
+    <td><img src="images/screenshots/mobile.png" width="300"/></td>
+    <td><img src="images/screenshots/web.png" width="300"/></td>
+  </tr>
+</table>
+
 ## Features
 
 - **Interactive Zoom & Pan**: Leverage `InteractiveViewer` for natural gestures to adjust the image position and scale.
