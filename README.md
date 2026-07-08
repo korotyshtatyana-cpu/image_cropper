@@ -4,9 +4,9 @@ A flexible, high-performance image cropping widget for Flutter, built with `Inte
 
 <table>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/desctop.png" width="250"/><br/><sub>Desktop</sub></td>
-    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/mobile.png" width="250"/><br/><sub>Mobile</sub></td>
-    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/images/screenshots/web.png" width="250"/><br/><sub>Web</sub></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/example/images/screenshots/desctop.png" width="250"/><br/><sub>Desktop</sub></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/example/images/screenshots/mobile.png" width="250"/><br/><sub>Mobile</sub></td>
+    <td><img src="https://raw.githubusercontent.com/korotyshtatyana-cpu/image_cropper/main/example/images/screenshots/web.png" width="250"/><br/><sub>Web</sub></td>
   </tr>
 </table>
 
