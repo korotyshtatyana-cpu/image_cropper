@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'circle_cutout_painter.dart';
-import 'crop_image_service.dart';
+import 'crop_image_service/crop_image_service.dart';
 
 class ImageCropper extends StatefulWidget {
   const ImageCropper({super.key});
