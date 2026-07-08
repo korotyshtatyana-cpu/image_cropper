@@ -1,0 +1,15 @@
+# We consider all .dart files to be Dart (by default)
+*.dart linguist-language=Dart
+
+# Ignoring platform folders in language statistics
+android/** linguist-vendored
+ios/** linguist-vendored
+linux/** linguist-vendored
+macos/** linguist-vendored
+windows/** linguist-vendored
+
+# If there are .cpp/.h files in folders that are not part of the main code, they can be hidden
+*.cpp linguist-language=ignore
+*.h linguist-language=ignore
+*.cc linguist-language=ignore
+*.cxx linguist-language=ignore
