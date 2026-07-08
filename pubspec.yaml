@@ -21,14 +21,6 @@ topics:
   - flutter-widget
   - photo-editing
 
-screenshots:
-  - description: "Cropping on desktop"
-    path: example/images/screenshots/desctop.png
-  - description: "Cropping on mobile"
-    path: example/images/screenshots/mobile.png
-  - description: "Cropping on web"
-    path: example/images/screenshots/web.png
-
 platforms:
   android:
   ios:
