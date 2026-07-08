@@ -13,8 +13,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          title: const Text('Image Cropper with InteractiveViewer'),
+          backgroundColor: Colors.black,
+          title: const Text(
+            'Image Cropper with InteractiveViewer',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: const ImageCropper(),
       ),

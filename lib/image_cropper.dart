@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'circle_cutout_painter.dart';
 import 'crop_image_service.dart';
 
 class ImageCropper extends StatefulWidget {
@@ -19,7 +20,7 @@ class _ImageCropperState extends State<ImageCropper> {
   EdgeInsets _boundaryMargin = EdgeInsets.zero;
 
   // Fixed crop area dimensions
-  final double _cropSize = 200;
+  int _cropSize = 200;
 
   @override
   void initState() {
@@ -48,13 +49,18 @@ class _ImageCropperState extends State<ImageCropper> {
 
   Future<void> _loadImage() async {
     // Load an image from assets
-    final ByteData data = await rootBundle.load('images/lorenzomessinaph.jpg');
+    final ByteData data = await rootBundle.load('images/arindam-chowdhury.jpg');
     final Uint8List list = Uint8List.view(data.buffer);
     final ui.Image image = await _loadImageFromBytes(list);
 
     setState(() {
       _image = image;
       _imageLoaded = true;
+      _cropSize = _image.width < _cropSize
+          ? _image.width
+          : _image.height < _cropSize
+              ? _image.height
+              : _cropSize;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -98,12 +104,15 @@ class _ImageCropperState extends State<ImageCropper> {
                       // Static crop area in the center
                       IgnorePointer(
                         child: Center(
-                          child: Container(
-                            width: _cropSize,
-                            height: _cropSize,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red, width: 2),
-                              color: Colors.transparent,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: CustomPaint(
+                              painter: CircleCutoutPainter(
+                                cropSize: _cropSize,
+                                overlayColor:
+                                    Colors.black.withValues(alpha: 0.6),
+                              ),
                             ),
                           ),
                         ),
@@ -117,6 +126,7 @@ class _ImageCropperState extends State<ImageCropper> {
           onPressed: _imageLoaded ? () => _cropImage(context) : null,
           child: const Text('Crop Image'),
         ),
+        const SizedBox(height: 36),
       ],
     );
   }
@@ -132,7 +142,10 @@ class _ImageCropperState extends State<ImageCropper> {
     ).then((Image? image) {
       showDialog(
         context: context,
-        builder: (_) => AlertDialog(content: image),
+        builder: (_) => AlertDialog(
+          content: image,
+          contentPadding: EdgeInsets.zero,
+        ),
       );
     });
   }

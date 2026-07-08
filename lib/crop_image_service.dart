@@ -9,7 +9,7 @@ class CropImageService {
   static Future<Image?> cropImage({
     required Matrix4 transformation,
     required RenderBox renderBox,
-    required double cropSize,
+    required int cropSize,
     required int imageWidth,
     required int imageHeight,
     required ByteData? imageByteData,
@@ -27,8 +27,8 @@ class CropImageService {
 
     final ui.Rect cropRect = Rect.fromCenter(
       center: Offset(size.width / 2, size.height / 2),
-      width: cropSize,
-      height: cropSize,
+      width: cropSize.toDouble(),
+      height: cropSize.toDouble(),
     );
 
     // Apply the inverse matrix to the crop rect to get the portion of the image that is visible
